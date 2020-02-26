@@ -18,7 +18,6 @@
   (str (fs/absolute (io/file slack-directory))))
 
 (defn get-pages []
-  (println "meow")
   (merge (stasis/slurp-directory "resources/public" #".*\.(html|css|js)$")
          {"/index.html" (page/index {:emojis-summary @emojis-summary
                                      :emojis-sources @emojis-sources})}))

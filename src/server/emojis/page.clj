@@ -13,6 +13,9 @@
             :content "width=device-width, initial-scale=1.0"}]
     [:title "Emojis"]
     [:link {:rel "stylesheet" :href "/styles/styles.css"}]
-    [:script (json/encode data)]]
+    [:script {:src "/js/app.js"
+              :type "text/javascript"}]
+    [:script (str "var emoji_data=" (json/encode data))]
+    [:script "emojis.main.init(emoji_data);"]]
    [:body
     [:div.body "meow"]]))

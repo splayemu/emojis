@@ -1,0 +1,9 @@
+{:lein   true
+ :builds {:main {:target     :browser
+                 :output-dir "resources/public/js"
+                 :asset-path "/js"
+                 :modules    {:app {:entries [emojis.main]}}
+                 :devtools   {:repl-init-ns emojis.main
+                              :repl-pprint  true
+                              :watch-dir    "resources/public"
+                              :watch-exts   #{"css" "min.css"}}}}}

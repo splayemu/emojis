@@ -13,3 +13,6 @@ pom.xml.asc
 /resources/slack_export/
 /resources/test_export/
 /resources/config/private.edn
+/resources/public/
+/.shadow-cljs/
+/node_modules/
