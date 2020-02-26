@@ -2,6 +2,7 @@
   (:require
     [emojis.page :as page]
     [emojis.slack-messages :as slack-messages]
+    [shadow.cljs.devtools.api :as shadow]
     [clojure.java.io :as io]
     [cheshire.core :as json]
     [org.httpkit.client :as http]
@@ -55,5 +56,18 @@
 
   (serve-development)
 
+  )
+
+(defn export []
+  (let [target-dir "resources/release"
+        pages      (get-pages)]
+    ;; first build release version of javascript
+    (shadow/release :main)
+    (stasis/empty-directory! target-dir)
+    (stasis/export-pages pages target-dir)
+    :exported))
+
+(comment
+  (export)
 
   )

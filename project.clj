@@ -5,6 +5,11 @@
             :url "https://opensource.org/licenses/MIT"}
   ;; for shadow-cljs
   :source-paths ["src/server" "src/shared" "src/client"]
+  ;; We remove .shadow-cljs to prevent the frontend from caching between deploys
+  :clean-targets ^{:protect false} ["target"
+                                    "resources/public"
+                                    "resources/release"
+                                    ".shadow-cljs"]
   :dependencies [[org.clojure/clojure "1.10.0"]
                  [thheller/shadow-cljs "2.8.88"]
                  [me.raynes/fs "1.4.6"]
