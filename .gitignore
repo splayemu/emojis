@@ -14,5 +14,6 @@ pom.xml.asc
 /resources/test_export/
 /resources/config/private.edn
 /resources/public/
+/resources/release/
 /.shadow-cljs/
 /node_modules/

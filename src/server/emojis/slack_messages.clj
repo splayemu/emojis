@@ -41,11 +41,32 @@
                   "UAUCN8FD4"],
                  :count 4}]})
 
+  ;; another message
+  {:type "message",
+   :text "I might actually head to Mixt Greens as soon as I push this fix",
+   :user "U1ZRZ8T7F",
+   :ts "1396291398.000074",
+   :team "T02T3ELUQ",
+   :user_team "T02T3ELUQ",
+   :source_team "T02T3ELUQ",
+   :user_profile
+   {:first_name "Meow",
+    :real_name "Meow",
+    :name "Meow",
+    :is_restricted false,
+    :image_72
+    "https://secure.gravatar.com/avatar/204ee6169730e6b7529817e8bda546c3.jpg?s=72&d=https%3A%2F%2Fa.slack-edge.com%2Fdf10d%2Fimg%2Favatars%2Fava_0012-72.png",
+    :avatar_hash "g04ee6169730",
+    :is_ultra_restricted false,
+    :team "T02T3ELUQ",
+    :display_name "eric"}}
+
   )
 
 (defn parse-messages [day-file]
   (with-open [in-file (io/reader day-file)]
     (let [messages (json/parse-stream in-file true)]
+      (def tn messages)
       (->> messages
            (map count-emojis)
            (reduce (partial merge-with +))))))
@@ -81,7 +102,7 @@
     general_nonsense
       2020-01-01.json
       2020-01-02.json"
-  [directory-name]
+  [directory-name & [filter-emojis]]
   (let [root-directory (io/file directory-name)]
     (->> directory-name
          (fs/walk
@@ -95,10 +116,13 @@
                 (map (fn [date-filename]
                        (let [date-file (io/file directory-name
                                                 (fs/name root)
-                                                date-filename)]
+                                                date-filename)
+                             emojis    (parse-messages date-file)]
                          {:date         (fs/name date-file)
                           :channel-name channel-name
-                          :emojis       (parse-messages date-file)}))
+                          :emojis       (if filter-emojis
+                                          (select-keys emojis filter-emojis)
+                                          emojis)}))
                      files)))))
          (keep identity)
          (mapcat identity))))
